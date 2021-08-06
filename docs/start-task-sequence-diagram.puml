@@ -1,0 +1,17 @@
+
+@startuml start task
+TaskWarrior -> TaskWarrior_Hook : on modify
+alt if project does not exist in Toggl
+    TaskWarrior_Hook -> Toggl : POST api/v8/projects
+    note right : create new toggl project
+end
+TaskWarrior_Hook -> Toggl : GET api/v8/time_entries/current
+note right : Get running time entry
+alt if there is a running time entry
+    TaskWarrior_Hook -> Toggl : PUT api/v8/time_entries/{time_entry_id}/stop
+end
+TaskWarrior_Hook -> Toggl : POST api/v8/time_entries/start
+note right : start a time entry
+TaskWarrior_Hook --> TaskWarrior : return 0 (OK)
+note right : result code = 0 (OK), ammend the modified \ntask with a note that the Toggl task has been started
+@enduml

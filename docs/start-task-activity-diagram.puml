@@ -1,0 +1,22 @@
+@startuml start task activity diagram
+start
+if (start task?) then (no)
+    stop; 
+elseif (active tasks?) then (count != 0)
+    stop;
+elseif (task has project) then (yes)
+
+    if(cached taskwarrior-to-toggl \nprojectname mapping?) then (false)
+        :query toggl for \nprojectnames;
+        :update taskwarrior-toggl cache;
+        if(cached taskwarrior-2-toggl \nprojectname mapping?) then (false)
+            :create new toggl project;
+        else(yes)
+        endif
+    else(yes)
+    endif
+else(no project)
+endif
+:start new toggl time entry;
+stop;
+@enduml

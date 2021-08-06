@@ -1,0 +1,13 @@
+@startuml populate projects cache
+TaskWarior_Hook -> Toggl : api/v8/me
+note right 
+get all workspaces
+and store default workspace
+end note
+loop all workspaces
+    TaskWarior_Hook -> Toggl : api/v8/workspaces/{wid}/projects?active=true
+    end
+note right  
+get active projects for workspace 
+end note
+@enduml

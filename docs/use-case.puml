@@ -1,0 +1,5 @@
+@startuml use cases
+user --> (start task)
+user --> (stop task)
+user --> (rename project)
+@enduml
